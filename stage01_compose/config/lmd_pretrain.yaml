@@ -1,0 +1,39 @@
+device:                 cuda
+pretrained_optim_path:  null
+pretrained_param_path:  null
+inference_param_path:   compose-and-embellish-pop1k7/compose_model_lmd_pretrained_loss0.288.bin
+
+model:
+    d_word_embed:       512
+    pre_lnorm:          True
+    decoder:
+        n_layer:        12
+        n_head:         8
+        d_model:        512
+        d_ff:           2048
+        dropout:        0.1    
+        mem_len:        0
+        tgt_len:        2400
+
+data:
+    data_dir:           compose-and-embellish-pop1k7/datasets/stage01_compose/lmd_pretrain
+    train_split:        compose-and-embellish-pop1k7/datasets/stage01_compose/data_splits/lmd_pretrain_train.pkl
+    val_split:          compose-and-embellish-pop1k7/datasets/stage01_compose/data_splits/lmd_pretrain_valid.pkl
+    vocab_path:         stage01_compose/vocab/remi_jtrans_vocab.pkl
+    batch_size:         2
+    max_n_seg:          1
+
+training:
+    trained_steps:      null
+    trained_epochs:     null
+    warmup_steps:       200
+    lr_decay_steps:     500000
+    max_lr:             1.0e-4
+    min_lr:             1.0e-5
+    max_epoch:          200
+    val_interval:       1
+    log_interval:       200
+
+output:
+    ckpt_dir:           ckpt/stage01_compose_pretrain_lmdfull_seq2400
+    ckpt_interval:      1

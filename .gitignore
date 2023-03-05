@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# HuggingFace Hub model weights and datasets
+compose-and-embellish-pop1k7/
+
+# generated music
+generation/
+
+# model checkpoints
+ckpt/

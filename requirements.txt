@@ -1,0 +1,9 @@
+PyYAML
+numpy
+scipy
+matplotlib
+miditoolkit
+torch==1.6.0
+
+# the following needs to be installed after running `pip install -r requirements.txt`
+# pytorch-fast-transformers==0.3.0
