@@ -13,3 +13,15 @@ We would like to thank the following people for their open-source implementation
   - [**Musical structure analysis**](https://github.com/Dsqvival/hierarchical-structure-analysis): Shuqi Dai ([@Dsqvival](https://github.com/Dsqvival))
   - [**LakhMIDI melody identification**](https://github.com/gulnazaki/lyrics-melody/tree/main/pre-processing): Thomas Melistas ([@gulnazaki](https://github.com/gulnazaki))
   - [**Skyline melody extraction**](https://github.com/wazenmai/MIDI-BERT/tree/CP/melody_extraction/skyline): Wen-Yi Hsiao ([@wayne391](https://github.com/wayne391)) and Yi-Hui Chou ([@sophia1488](https://github.com/sophia1488))
+
+## BibTex
+If this repo is helpful for your research, please consider citing:
+```
+@inproceedings{wu2023compembellish,
+  title={{Compose \& Embellish}: Well-Structured Piano Performance Generation via A Two-Stage Approach},
+  author={Wu, Shih-Lun and Yang, Yi-Hsuan},
+  booktitle={Proc. Int. Conf. on Acoustics, Speech and Signal Processing (ICASSP)},
+  year={2023},
+  url={https://arxiv.org/pdf/2209.08212.pdf}
+}
+```
