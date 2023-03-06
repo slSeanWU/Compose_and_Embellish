@@ -22,14 +22,18 @@ Official PyTorch implementation of the paper:
 ## Generate piano performances (with our trained models)
   - Stage 1: generate lead sheets (i.e., melody + chord progression)
     ```
-    python3 stage01_compose/inference.py stage01_compose/config/pop1k7_finetune.yaml generation/stage01 20
+    python3 stage01_compose/inference.py \
+      stage01_compose/config/pop1k7_finetune.yaml \
+      generation/stage01 \
+      20
     ```
     You'll have 20 lead sheets under `generation/stage01` after this step.  
-  
-  
   - Stage 2: generate full performances conditioned on Stage 1 lead sheets
     ```
-    python3 stage02_embellish/inference.py stage02_embellish/config/pop1k7_default.yaml generation/stage01 generation/stage02
+    python3 stage02_embellish/inference.py \
+      stage02_embellish/config/pop1k7_default.yaml \
+      generation/stage01 \
+      generation/stage02
     ```
     The `samp_**_2stage_samp**.mid` files under `generation/stage02` are the final results.
     
