@@ -37,7 +37,7 @@ Official PyTorch implementation of the paper:
     ```
     The `samp_**_2stage_samp**.mid` files under `generation/stage02` are the final results.
     
-## Training (finetuning) models on _AILabs.tw Pop1K7_ dataset
+## Train (finetune) models on _AILabs.tw Pop1K7_ dataset
   - Stage 1: lead sheet (i.e. "**Compose**") model
     ```
     python3 stage01_compose/train.py stage01_compose/config/pop1k7_finetune.yaml
@@ -48,7 +48,7 @@ Official PyTorch implementation of the paper:
     ```
 Note that these two commands may be run in parallel.
 
-## Training on custom datasets
+## Train on custom datasets
 If you'd like to experiment with your own datasets, we suggest that you
   - read our **dataloaders** ([stage 1](https://github.com/slSeanWU/Compose_and_Embellish/blob/main/stage01_compose/dataloader.py), [stage 2](https://github.com/slSeanWU/Compose_and_Embellish/blob/main/stage02_embellish/dataloader.py)) and `.pkl` files of our **processed datasets** ([stage 1](https://huggingface.co/slseanwu/compose-and-embellish-pop1k7/tree/main/datasets/stage01_compose/pop1k7_finetune), [stage 2](https://huggingface.co/slseanwu/compose-and-embellish-pop1k7/tree/main/datasets/stage02_embellish/pop1k7_leedsheet2midi)) to understand what the models receive as inputs
   - refer to [CP Transformer repo](https://github.com/YatingMusic/compound-word-transformer/blob/main/dataset/Dataset.md) for a general guide on converting audio/MIDI files to event-based representations
