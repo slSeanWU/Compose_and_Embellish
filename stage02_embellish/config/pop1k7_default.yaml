@@ -1,0 +1,37 @@
+data_loader:
+  data_path:        compose-and-embellish-pop1k7/datasets/stage02_embellish/pop1k7_leedsheet2midi
+  vocab_path:       stage02_embellish/vocab/skyline2midi_vocab.pkl
+  batch_size:       4
+  train_split:      compose-and-embellish-pop1k7/datasets/stage02_embellish/data_splits/train.pkl
+  val_split:        compose-and-embellish-pop1k7/datasets/stage02_embellish/data_splits/valid.pkl
+  do_augment:       True
+
+model:
+  d_model:          512
+  d_embed:          512
+  max_len:          3072
+  n_layer:          12
+  n_head:           8
+  d_ff:             2048
+  feature_map:
+    n_dims:         128
+  use_segemb:       True
+
+
+training:
+  gpuid:            0
+  num_epochs:       1000
+  ckpt_dir:         ckpt/stage02_embellish_pop1k7_seq3072
+  ckpt_interval:    10       # epochs
+  log_interval:     50       # steps
+  trained_params:   null
+  trained_optim:    null
+  inference_params: compose-and-embellish-pop1k7/embellish_model_pop1k7_loss0.399.bin
+
+  lr:               1.0e-4
+  lr_scheduler:
+    eta_min:        1.0e-5
+    T_max:          500000    # 160 epochs
+  warmup_steps:     200
+
+  feat_redraw_prob: 0.05

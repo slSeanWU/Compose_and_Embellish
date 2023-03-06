@@ -1,4 +1,4 @@
-device:                 cuda:0
+device:                 cuda
 pretrained_optim_path:  null
 pretrained_param_path:  null
 inference_param_path:   compose-and-embellish-pop1k7/compose_model_lmd_pretrained_loss0.288.bin
@@ -13,7 +13,7 @@ model:
         d_ff:           2048
         dropout:        0.1    
         mem_len:        0
-        tgt_len:        500
+        tgt_len:        2400
 
 data:
     data_dir:           compose-and-embellish-pop1k7/datasets/stage01_compose/pop1k7_finetune
@@ -30,10 +30,10 @@ training:
     lr_decay_steps:     500000
     max_lr:             1.0e-4
     min_lr:             1.0e-5
-    max_epoch:          10000
+    max_epoch:          40
     val_interval:       1
     log_interval:       50
 
 output:
     ckpt_dir:           ckpt/stage01_compose_finetune_pop1k7_seq2400
-    ckpt_interval:      6
+    ckpt_interval:      4

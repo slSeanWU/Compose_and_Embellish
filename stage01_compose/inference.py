@@ -10,7 +10,7 @@ import torch
 import numpy as np
 
 from model.plain_transformer import PlainTransformer
-from convert2midi_remi import skyline_event_to_midi, TempoEvent
+from convert2midi import skyline_event_to_midi, TempoEvent
 from utils import pickle_load
 from inference_utils import generate_plain_xl
 

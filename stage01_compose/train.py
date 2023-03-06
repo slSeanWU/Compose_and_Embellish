@@ -138,8 +138,7 @@ def validate(epoch, model, dloader, rounds=1):
             print ('  valloss:', round(losses['ce_loss'].item(), 3))
           recons_loss_rec.append(losses['ce_loss'].item())
     
-  return recons_loss_rec
-                  
+  return recons_loss_rec                
 
 
 def log_epoch(log_file, log_data, is_init=False):
@@ -161,13 +160,11 @@ def log_epoch(log_file, log_data, is_init=False):
   return
 
 if __name__ == '__main__':
-  # os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-
   dset = SkylineFullSongTransformerDataset(
            config['data']['data_dir'],
            config['data']['vocab_path'],
            pieces=pickle_load(config['data']['train_split']),
-           do_augment=True,
+           do_augment=True if "lmd" not in config['data']['data_dir'] else False,
            model_dec_seqlen=config['model']['decoder']['tgt_len'],
            max_n_seg=config['data']['max_n_seg'],
            # max_pitch=108, min_pitch=48,
@@ -179,7 +176,7 @@ if __name__ == '__main__':
                config['data']['data_dir'],
                config['data']['vocab_path'],
                pieces=pickle_load(config['data']['val_split']),
-               do_augment=True,
+               do_augment=False,
                model_dec_seqlen=config['model']['decoder']['tgt_len'],
                max_n_seg=config['data']['max_n_seg'],
                # max_pitch=108, min_pitch=48,
@@ -197,8 +194,7 @@ if __name__ == '__main__':
             )
   val_dloader = DataLoader(
                   val_dset, 
-                  batch_size=4, 
-                  shuffle=True, 
+                  batch_size=4,  
                   num_workers=24,
                   collate_fn=val_dset.collate_fn
                 )

@@ -6,4 +6,4 @@ miditoolkit
 torch==1.6.0
 
 # the following needs to be installed after running `pip install -r requirements.txt`
-# pytorch-fast-transformers==0.3.0
+# git+https://github.com/cifkao/fast-transformers.git@39e726864d1a279c9719d33a95868a4ea2fb5ac5
