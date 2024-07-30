@@ -7,6 +7,7 @@ data_loader:
   do_augment:       True
 
 model:
+  type:             gpt2
   d_model:          512
   d_embed:          512
   max_len:          2048
@@ -27,7 +28,7 @@ training:
   trained_params:   null
   trained_optim:    null
   accum_steps:      2
-  inference_params: /home/slseanwu/Compose_and_Embellish/ckpt/stage02_embellish_pop1k7_seq2048_gpt2/params/ep370_loss0.398_params.pt
+  inference_params: compose-and-embellish-pop1k7/embellish_model_pop1k7_gpt2_loss0.398.bin
 
   lr:               1.0e-4
   lr_scheduler:

@@ -1,6 +1,6 @@
    
 import os, random
-import pickle
+import pickle5 as pickle
 from glob import glob
 
 import torch

@@ -1,4 +1,5 @@
 PyYAML
+pickle5
 numpy
 scipy
 matplotlib
