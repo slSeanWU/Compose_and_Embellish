@@ -7,7 +7,6 @@ import yaml
 import numpy as np
 
 from dataloader import REMISkylineToMidiTransformerDataset, pickle_load, KEY_TO_IDX
-from model.music_performer import MusicPerformer
 from convert2midi import event_to_midi
 
 train_conf_path = sys.argv[1]
@@ -26,7 +25,6 @@ max_dec_inp_len = 2048
 
 use_chords_mhot = 'use_chord_emb' in train_conf['model'] and train_conf['model']['use_chord_emb']
 
-temp, top_p = 1.1, 0.99
 n_pieces = 20
 samp_per_piece = 1
 
@@ -222,7 +220,8 @@ def get_position_idx(event):
 def generate_conditional(model, event2idx, idx2event, skyline_events, tempo,
                           max_events=10000, skip_check=False, max_bars=None,
                           temp=1.2, top_p=0.9, inadmissibles=None,
-                          use_chords_mhot=False, skyline_chords_mhot=None
+                          use_chords_mhot=False, skyline_chords_mhot=None,
+                          model_type="performer",
                         ):
   # generated = [event2idx['Bar_None']]
   generated = [tempo, event2idx['Track_Skyline']] + skyline_events[0] + [event2idx['Track_Midi']]
@@ -259,13 +258,22 @@ def generate_conditional(model, event2idx, idx2event, skyline_events, tempo,
       dec_chords_mhot =None
 
     # sampling
-    logits = model(
-              dec_input, 
-              seg_inp=dec_seg_inp,
-              chord_inp=dec_chords_mhot,
-              keep_last_only=True, 
-              attn_kwargs={'omit_feature_map_draw': steps > 0}
-            )
+    if model_type == "performer":
+      logits = model(
+                dec_input, 
+                seg_inp=dec_seg_inp,
+                chord_inp=dec_chords_mhot,
+                keep_last_only=True, 
+                attn_kwargs={'omit_feature_map_draw': steps > 0}
+              )
+    else:
+      logits = model(
+                dec_input, 
+                seg_inp=dec_seg_inp,
+                chord_inp=dec_chords_mhot,
+                keep_last_only=True,
+              )
+
     logits = (logits[0]).cpu().detach().numpy()
     probs = temperature(logits, temp, inadmissibles=inadmissibles)
     word = nucleus(probs, top_p)
@@ -360,13 +368,30 @@ if __name__ == '__main__':
   )
 
   model_conf = train_conf['model']
-  model = model = MusicPerformer(
+  model_type = model_conf.get("type", "performer")
+
+  if model_type == "performer":
+    from model.music_performer import MusicPerformer
+    model = MusicPerformer(
       dset.vocab_size, model_conf['n_layer'], model_conf['n_head'], 
       model_conf['d_model'], model_conf['d_ff'], model_conf['d_embed'],
       use_segment_emb=model_conf['use_segemb'], n_segment_types=2,
       favor_feature_dims=model_conf['feature_map']['n_dims'],
       use_chord_mhot_emb=use_chords_mhot
     ).cuda()
+    temp, top_p = 1.1, 0.99
+  elif model_type == "gpt2":
+    from model.music_gpt2 import MusicGPT2
+    model = MusicGPT2(
+        dset.vocab_size, model_conf['n_layer'], model_conf['n_head'], 
+        model_conf['d_model'], model_conf['d_ff'], model_conf['d_embed'],
+        use_segment_emb=model_conf['use_segemb'], n_segment_types=2,
+        use_chord_mhot_emb=use_chords_mhot,
+      ).cuda(gpuid)
+    temp, top_p = 1.2, 0.97
+  else:
+    raise NotImplementedError("Unsuppported model:", model_type)
+  print(f"[info] temp = {temp} | top_p = {top_p}")
 
   pretrained_dict = torch.load(inference_param_path) #, map_location='cpu')
   pretrained_dict = {
@@ -407,7 +432,8 @@ if __name__ == '__main__':
         generated = generate_conditional(model, dset.event2idx, dset.idx2event, skyline_events, tempo, max_bars=max_bars,
                                          temp=temp, top_p=top_p, inadmissibles=None, 
                                          use_chords_mhot=use_chords_mhot,
-                                         skyline_chords_mhot=skyline_chords_mhot
+                                         skyline_chords_mhot=skyline_chords_mhot,
+                                         model_type=model_type
                                         )
 
       for i in range(min(max_bars, len(skyline_events))):
