@@ -9,6 +9,7 @@ Official PyTorch implementation of the paper:
 ## Changelog
   - [24-07-29] Added `transformers` GPT-2 implementation for Embellish model, which doesn't depend on `fast-transformers` package.
 
+
 ## Prerequisites
   - **Python 3.8** and **CUDA 10.2** recommended
   - Install dependencies
@@ -64,6 +65,7 @@ Official PyTorch implementation of the paper:
       python3 stage02_embellish/train.py stage02_embellish/config/pop1k7_default.yaml
       ```
 Note that these two training stages may be run in parallel.
+
 
 ## Train on custom datasets
 If you'd like to experiment with your own datasets, we suggest that you
