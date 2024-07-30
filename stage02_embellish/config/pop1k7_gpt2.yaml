@@ -28,7 +28,7 @@ training:
   trained_params:   null
   trained_optim:    null
   accum_steps:      2
-  inference_params: compose-and-embellish-pop1k7/embellish_model_pop1k7_gpt2_loss0.398.bin
+  inference_params: compose-and-embellish-pop1k7/embellish_model_gpt2_pop1k7_loss0.398.bin
 
   lr:               1.0e-4
   lr_scheduler:
